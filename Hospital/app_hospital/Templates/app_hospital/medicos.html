@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app_hospital/styles.css' %}">
+    <title>Medicos</title>
+</head>
+<body>
+    <h1>Lista de Medicos</h1>
+
+    <a href="/medicos/agregar/"><button>Agregar Medico</button></a>
+
+    <table border="1">
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Especialidad</th>
+            <th>Matricula</th>
+            <th>Telefono</th>
+        </tr>
+        {% for medico in medicos %}
+        <tr>
+            <td>{{ medico.nombre }}</td>
+            <td>{{ medico.apellido }}</td>
+            <td>{{ medico.id_especialidad.nombre }}</td>
+            <td>{{ medico.matricula }}</td>
+            <td>{{ medico.telefono }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="/">Volver al inicio</a>
+</body>
+</html>

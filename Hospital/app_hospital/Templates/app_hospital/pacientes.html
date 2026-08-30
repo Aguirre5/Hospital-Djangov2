@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'app_hospital/styles.css' %}">
+    <title>Pacientes</title>
+</head>
+<body>
+    <h1>Lista de Pacientes</h1>
+
+    <a href="/pacientes/agregar/"><button>Agregar Paciente</button></a>
+    <input type="text" id="buscador" placeholder="Buscar paciente:" onkeyup="buscarPaciente()">
+
+    <table border="1" id="tablaPacientes">
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>DNI</th>
+            <th>Fecha Nacimiento</th>
+            <th>Sexo</th>
+            <th>Direccion</th>
+            <th>Telefono</th>
+            <th>Email</th>
+            <th>Grupo Sanguineo</th>
+            <th>Contacto Emergencia</th>
+            <th>Telefono Emergencia</th>
+            <th>Obra Social</th>
+            <th>Numero Afiliado</th>
+            <th>Fecha Alta</th>
+            <th>Estado</th>
+        </tr>
+    {% for paciente in pacientes %}
+        <tr>
+            <td>{{ paciente.nombre }}</td>
+            <td>{{ paciente.apellido }}</td>
+            <td>{{ paciente.dni }}</td>
+            <td>{{ paciente.fecha_nacimiento }}</td>
+            <td>{{ paciente.sexo }}</td>
+            <td>{{ paciente.direccion }}</td>
+            <td>{{ paciente.telefono }}</td>
+            <td>{{ paciente.email }}</td>
+            <td>{{ paciente.grupo_sanguineo }}</td>
+            <td>{{ paciente.contacto_emergencia }}</td>
+            <td>{{ paciente.telefono_emergencia }}</td>
+            <td>{{ paciente.obra_social }}</td>
+            <td>{{ paciente.numero_afiliado }}</td>
+            <td>{{ paciente.fecha_alta }}</td>
+            <td>{{ paciente.estado }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+
+    <a href="/">Volver al inicio</a>
+
+    <script>
+        // Filtra las filas de la tabla segun lo que se escribe en el buscador
+        function buscarPaciente() {
+            var texto = document.getElementById("buscador").value.toLowerCase();
+            var tabla = document.getElementById("tablaPacientes");
+            var filas = tabla.getElementsByTagName("tr");
+
+            // Empieza en 1 para saltar la fila de encabezados
+            for (var i = 1; i < filas.length; i++) {
+                var fila = filas[i];
+                var textoFila = fila.textContent.toLowerCase();
+
+                if (textoFila.indexOf(texto) > -1) {
+                    fila.style.display = "";
+                } else {
+                    fila.style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>

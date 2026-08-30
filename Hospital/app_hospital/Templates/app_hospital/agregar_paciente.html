@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'app_hospital/styles.css' %}">
+    <title>Editar Paciente</title>
+</head>
+<body>
+    <h1>Editar Paciente</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Nombre:</label>
+        <input type="text" name="nombre" value="{{ paciente.nombre }}"><br>
+
+        <label>Apellido:</label>
+        <input type="text" name="apellido" value="{{ paciente.apellido }}"><br>
+
+        <label>DNI:</label>
+        <input type="text" name="dni" value="{{ paciente.dni }}"><br>
+
+        <label>Fecha de Nacimiento:</label>
+        <input type="date" name="fecha_nacimiento" value="{{ paciente.fecha_nacimiento|date:'Y-m-d' }}"><br>
+
+        <label>Sexo:</label>
+        <input type="text" name="sexo" value="{{ paciente.sexo }}"><br>
+
+        <label>Direccion:</label>
+        <input type="text" name="direccion" value="{{ paciente.direccion }}"><br>
+
+        <label>Telefono:</label>
+        <input type="text" name="telefono" value="{{ paciente.telefono }}"><br>
+
+        <label>Email:</label>
+        <input type="email" name="email" value="{{ paciente.email }}"><br>
+
+        <label>Grupo Sanguineo:</label>
+        <input type="text" name="grupo_sanguineo" value="{{ paciente.grupo_sanguineo }}"><br>
+
+        <label>Contacto de Emergencia:</label>
+        <input type="text" name="contacto_emergencia" value="{{ paciente.contacto_emergencia }}"><br>
+
+        <label>Telefono de Emergencia:</label>
+        <input type="text" name="telefono_emergencia" value="{{ paciente.telefono_emergencia }}"><br>
+
+        <label>Obra Social:</label>
+        <input type="text" name="obra_social" value="{{ paciente.obra_social }}"><br>
+
+        <label>Numero de Afiliado:</label>
+        <input type="text" name="numero_afiliado" value="{{ paciente.numero_afiliado }}"><br>
+
+        <label>Fecha de Alta:</label>
+        <input type="date" name="fecha_alta" value="{{ paciente.fecha_alta|date:'Y-m-d' }}"><br>
+
+        <label>Estado:</label>
+        <input type="text" name="estado" value="{{ paciente.estado }}"><br>
+
+        <button type="submit">Guardar Cambios</button>
+    </form>
+
+    <a href="/pacientes/">Volver a Pacientes</a>
+</body>
+</html>

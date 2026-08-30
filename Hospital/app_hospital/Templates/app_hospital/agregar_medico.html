@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app_hospital/styles.css' %}">
+    <title>Editar Medico</title>
+</head>
+<body>
+    <h1>Editar Medico</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Nombre:</label>
+        <input type="text" name="nombre" value="{{ medico.nombre }}"><br>
+
+        <label>Apellido:</label>
+        <input type="text" name="apellido" value="{{ medico.apellido }}"><br>
+
+        <label>Matricula:</label>
+        <input type="text" name="matricula" value="{{ medico.matricula }}"><br>
+
+        <label>Telefono:</label>
+        <input type="text" name="telefono" value="{{ medico.telefono }}"><br>
+
+        <label>Especialidad:</label>
+        <select name="id_especialidad">
+            {% for especialidad in especialidades %}
+            <option value="{{ especialidad.id_especialidad }}"
+                {% if especialidad.id_especialidad == medico.id_especialidad.id_especialidad %}selected{% endif %}>
+                {{ especialidad.nombre }}
+            </option>
+            {% endfor %}
+        </select><br>
+
+        <label>Estado:</label>
+        <input type="text" name="estado" value="{{ medico.estado }}"><br>
+
+        <button type="submit">Guardar Cambios</button>
+    </form>
+
+    <a href="/medicos/">Volver a Medicos</a>
+</body>
+</html>
