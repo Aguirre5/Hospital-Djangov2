@@ -4,8 +4,7 @@ from django.contrib import messages
 from datetime import date, datetime
 import re
 from .pacientes_db import obtener_pacientes, agregar_paciente_db, dni_existe
-from .models import Medico
-from .models import Especialidad
+from .medicos_db import obtener_medicos, obtener_especialidades, agregar_medico_db
 
 def saludo(request):
     return HttpResponse("Hola, bienvenido a la aplicación del hospital.")
@@ -18,8 +17,9 @@ def pacientes(request):
     return render(request, 'app_hospital/pacientes.html', {'pacientes': lista_pacientes})
 
 def medicos(request):
-    lista_medicos = Medico.objects.all()
-    return render(request, 'app_hospital/medicos.html', {'medicos': lista_medicos})
+    lista_medicos = obtener_medicos()
+    return render(request, 'app_hospital/medicos.html', {
+        'medicos': lista_medicos,})
 
 def tratamientos(request):
     return render(request, 'app_hospital/tratamientos.html')
@@ -204,16 +204,30 @@ def agregar_paciente(request):
     return render(request, 'app_hospital/agregar_paciente.html')
 
 def agregar_medico(request):
-    if request.method == 'POST':
-        Medico.objects.create(
-            nombre=request.POST.get('nombre'),
-            apellido=request.POST.get('apellido'),
-            matricula=request.POST.get('matricula'),
-            telefono=request.POST.get('telefono'),
-            id_especialidad_id=request.POST.get('id_especialidad'),
-            estado=request.POST.get('estado'),
+    if request.method == 'POST': 
+        nombre=request.POST.get('nombre'),
+        apellido=request.POST.get('apellido'),
+        matricula=request.POST.get('matricula'),
+        telefono=request.POST.get('telefono'),
+        id_especialidad=request.POST.get('id_especialidad'),
+        estado=request.POST.get('estado'),
+        email=request.POST.get('email'),
+        consultorio=request.POST.get('consultorio'),
+        horario_atencion=request.POST.get('horario_atencion')
+        
+        agregar_medico_db(
+            nombre=nombre,
+            apellido=apellido,
+            matricula=matricula,
+            telefono=telefono,
+            id_especialidad=id_especialidad,
+            estado=estado,
+            email=email,
+            consultorio=consultorio,
+            horario_atencion=horario_atencion
         )
+        messages.success(request, 'Médico agregado sin problemas.')
         return redirect('medicos')
 
-    lista_especialidades = Especialidad.objects.all()
+    lista_especialidades = obtener_especialidades()
     return render(request, 'app_hospital/agregar_medico.html', {'especialidades': lista_especialidades})

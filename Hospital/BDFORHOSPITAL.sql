@@ -127,7 +127,41 @@ VALUES ('Juan', 'Perez', '12345678', '1985-03-20', 'Masculino', 'Activo');
 INSERT INTO pacientes (nombre, apellido, dni, fecha_nacimiento, sexo, estado)
 VALUES ('Maria', 'Gomez', '87654321', '1992-07-14', 'Femenino', 'Activo');
 
-INSERT INTO especialidades (nombre) VALUES ('Cardiologia');
+INSERT INTO especialidades (
+    id_especialidad,
+    nombre
+) VALUES
+(1, 'Cardiología'),
+(2, 'Neurología'),
+(3, 'Dermatología'),
+(4, 'Oftalmología'),
+(5, 'Traumatología'),
+(6, 'Endocrinología'),
+(7, 'Neumonología'),
+(8, 'Gastroenterología'),
+(9, 'Urología'),
+(10, 'Otorrinolaringología');
+INSERT INTO medicos (
+    id,
+    nombre,
+    apellido,
+    matricula,
+    telefono,
+    email,
+    consultorio,
+    horario_atencion,
+    fecha_ingreso,
+    estado,
+    id_especialidad
+) VALUES
+(1, 'Aureliano', 'Balmaceda', 'MP-58421', '3516124837', 'aureliano.balmaceda@example.com', 'Consultorio 101', '08:00-12:00', '2023-02-15', 'Activo', 1),
+(2, 'Elvira', 'Mazzini', 'MP-39274', '3516457291', 'elvira.mazzini@example.com', 'Consultorio 203', '14:00-18:00', '2022-08-21', 'Activo', 2),
+(3, 'Lisandro', 'Bertolotti', 'MP-51763', '3515873142', 'lisandro.bertolotti@example.com', 'Consultorio 105', '09:00-13:00', '2024-01-10', 'Activo', 3),
+(4, 'Amparo', 'Valcárcel', 'MP-68192', '3516982415', 'amparo.valcarcel@example.com', 'Consultorio 302', '13:00-17:00', '2023-06-03', 'Activo', 4),
+(5, 'Evaristo', 'Larralde', 'MP-27485', '3515739284', 'evaristo.larralde@example.com', 'Consultorio 108', '08:30-12:30', '2021-11-18', 'Inactivo', 5),
+(6, 'Irupé', 'Santillán', 'MP-73416', '3516349172', 'irupe.santillan@example.com', 'Consultorio 204', '15:00-19:00', '2024-03-27', 'Activo', 6),
+(7, 'Baltasar', 'Echeverría', 'MP-82941', '3516215834', 'baltasar.echeverria@example.com', 'Consultorio 110', '10:00-14:00', '2022-05-09', 'Activo', 7),
+(8, 'Candelaria', 'Aramburu', 'MP-36528', '3516597314', 'candelaria.aramburu@example.com', 'Consultorio 201', '08:00-11:00', '2023-09-12', 'Activo', 8);
 
-INSERT INTO medicos (nombre, apellido, matricula, telefono, id_especialidad, estado)
-VALUES ('Carlos', 'Lopez', '4521', '351-1234567', 1, 'Activo');
+-- Verificar los datos
+SELECT * FROM medicos;
