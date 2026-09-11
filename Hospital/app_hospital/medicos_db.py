@@ -41,9 +41,9 @@ def agregar_medico_db (
     email,
     consultorio,
     horario_atencion,
-    id_especialidad,
-    estado
+    id_especialidad
 ):
+    
     with connection.cursor() as cursor:
         cursor.execute("""
             INSERT INTO medicos (
@@ -66,8 +66,7 @@ def agregar_medico_db (
             matricula,
             telefono or None,
             email or None,
-            consultorio or None,
-            horario_atencion or None,
+            consultorio,
+            horario_atencion,
             id_especialidad,
-            estado
         ])

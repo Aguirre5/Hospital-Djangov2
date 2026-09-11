@@ -205,26 +205,25 @@ def agregar_paciente(request):
 
 def agregar_medico(request):
     if request.method == 'POST': 
-        nombre=request.POST.get('nombre'),
-        apellido=request.POST.get('apellido'),
-        matricula=request.POST.get('matricula'),
-        telefono=request.POST.get('telefono'),
-        id_especialidad=request.POST.get('id_especialidad'),
-        estado=request.POST.get('estado'),
-        email=request.POST.get('email'),
-        consultorio=request.POST.get('consultorio'),
-        horario_atencion=request.POST.get('horario_atencion')
+        nombre=request.POST.get('nombre', "").strip(),
+        apellido=request.POST.get('apellido', "").strip(),
+        matricula=request.POST.get('matricula', "").strip(),
+        telefono=request.POST.get('telefono', "").strip(),
+        
+        email=request.POST.get('email', "").strip(),
+        consultorio=request.POST.get('consultorio', "").strip(),
+        horario_atencion=request.POST.get('horario_atencion', "").strip(),
+        id_especialidad=request.POST.get('id_especialidad', "").strip()
         
         agregar_medico_db(
             nombre=nombre,
             apellido=apellido,
             matricula=matricula,
             telefono=telefono,
-            id_especialidad=id_especialidad,
-            estado=estado,
-            email=email,
+            email=email,  
             consultorio=consultorio,
-            horario_atencion=horario_atencion
+            horario_atencion=horario_atencion,
+            id_especialidad=id_especialidad
         )
         messages.success(request, 'Médico agregado sin problemas.')
         return redirect('medicos')
