@@ -20,7 +20,8 @@ def obtener_medicos():
                 m.id_especialidad = e.id_especialidad
                 ORDER BY m.apellido, m.nombre""")
         columnas = [col[0] for col in cursor.description]
-    return [dict(zip(columnas, fila)) for fila in cursor.fetchall()]
+        filas = cursor.fetchall()
+    return [dict(zip(columnas, fila)) for fila in filas]
 
 def obtener_especialidades():
     with connection.cursor() as cursor:
@@ -30,7 +31,10 @@ def obtener_especialidades():
                 FROM especialidades
                 ORDER BY nombre""")
         columnas = [col[0] for col in cursor.description]
-    return [dict(zip(columnas, fila)) for fila in cursor.fetchall()]
+        filas = cursor.fetchall()
+    return [dict(zip(columnas, fila)) for fila in filas]
+
+
 
 
 def agregar_medico_db (
@@ -66,7 +70,7 @@ def agregar_medico_db (
             matricula,
             telefono or None,
             email or None,
-            consultorio,
-            horario_atencion,
+            consultorio or None,
+            horario_atencion or None,
             id_especialidad,
         ])
