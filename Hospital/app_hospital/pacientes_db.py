@@ -58,13 +58,9 @@ def agregar_paciente_db(
                 estado
             )
             VALUES (
-                %s, %s, %s, %s, %s,
-                %s, %s, %s, %s, %s,
-                %s, %s, %s,
-                CURDATE(),
-                'Activo'
-            )
-        """, [
+                %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
+                CURDATE(), 'Activo'
+            )""", [
             nombre,
             apellido,
             dni,
@@ -79,3 +75,8 @@ def agregar_paciente_db(
             obra_social or None,
             numero_afiliado or None,
         ])
+        
+def dni_existe(dni):
+    with connection.cursor() as cursor:
+        cursor.execute("""SELECT 1 FROM pacientes WHERE dni = %s LIMIT 1 """, [dni])
+        return cursor.fetchone() is not None
