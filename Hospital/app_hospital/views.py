@@ -7,6 +7,9 @@ from .models import Paciente
 from .models import Medico
 from .models import Especialidad
 
+def saludo(request):
+    return HttpResponse("Hola, bienvenido a la aplicación del hospital.")
+
 def index(request):
     return render(request, 'app_hospital/index.html')
 
