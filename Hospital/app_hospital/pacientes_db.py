@@ -28,7 +28,9 @@ def agregar_paciente_db(
     apellido,
     dni,
     fecha_nacimiento,
-    sexo,
+    sexo_asignado_al_nacer,
+    identidad_genero,
+    identidad_genero_otro,
     direccion,
     telefono,
     email,
@@ -38,6 +40,12 @@ def agregar_paciente_db(
     obra_social,
     numero_afiliado
 ):
+    
+    if identidad_genero in ('X', 'O'):
+        sex_legacy = identidad_genero
+    else:
+        sex_legacy = sexo_asignado_al_nacer
+
     with connection.cursor() as cursor:
         cursor.execute("""
             INSERT INTO pacientes (
@@ -46,6 +54,9 @@ def agregar_paciente_db(
                 dni,
                 fecha_nacimiento,
                 sexo,
+                sexo_asignado_al_nacer,
+                identidad_genero,
+                identidad_genero_otro,
                 direccion,
                 telefono,
                 email,
@@ -65,7 +76,10 @@ def agregar_paciente_db(
             apellido,
             dni,
             fecha_nacimiento,
-            sexo,
+            sex_legacy,  # Guardar el sexo asignado al nacer en la columna 'sexo'
+            sexo_asignado_al_nacer,
+            identidad_genero,
+            identidad_genero_otro,
             direccion or None,
             telefono,
             email,

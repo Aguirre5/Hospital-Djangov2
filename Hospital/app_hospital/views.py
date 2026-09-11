@@ -30,7 +30,9 @@ def agregar_paciente(request):
         apellido = request.POST.get('apellido', '').strip()
         dni = request.POST.get('dni', '').strip()
         fecha_nacimiento = request.POST.get('fecha_nacimiento')
-        sexo = request.POST.get('sexo')
+        sexo_asignado_al_nacer = request.POST.get('sexo_asignado_al_nacer', '').strip()
+        identidad_genero = request.POST.get('identidad_genero', '').strip()
+        identidad_genero_otro = request.POST.get('identidad_genero_otro', '').strip()
         direccion = request.POST.get('direccion', '').strip()
         telefono = request.POST.get('telefono', '').strip()
         email = request.POST.get('email', '').strip()
@@ -134,12 +136,47 @@ def agregar_paciente(request):
                     request,
                     'app_hospital/agregar_paciente.html'
                 )
+        
+        sexos = ['M', 'F', 'I', 'N']
+        identidades = ['M', 'F', 'X', 'O', 'N']
+        
+        if sexo_asignado_al_nacer not in sexos:
+            messages.error(
+                request,
+                'El sexo asignado al nacer no es válido.'
+            )
+            return render(
+                request,
+                'app_hospital/agregar_paciente.html'
+            )
+
+        if identidad_genero not in identidades:
+            messages.error(
+                request,
+                'La identidad de género no es válida.'
+            )
+            return render(
+                request,
+                'app_hospital/agregar_paciente.html'
+            )
+            
+        if identidad_genero == 'O' and not identidad_genero_otro:
+            messages.error(
+                request,
+                'Debe especificar la identidad de género si selecciona "Otro".'
+            )
+            return render(
+                request,
+                'app_hospital/agregar_paciente.html'
+            )
 
         """Con esto, se protegen:
         Letras y espacios de Nombre y Apellido.
         DNI de 8 dígitos y no duplicado.
         Teléfonos de al menos 10 dígitos y solo números.
         Fecha de nacimiento no futura y válida.
+        Sexo e identidad de género válidos.
+        Identidad de género "Otro" requiere especificación.
         """
         
         #Acaban validaciones.
@@ -148,7 +185,9 @@ def agregar_paciente(request):
             apellido=apellido,
             dni=dni,
             fecha_nacimiento=fecha_nacimiento,
-            sexo=sexo,
+            sexo_asignado_al_nacer=sexo_asignado_al_nacer,
+            identidad_genero=identidad_genero,
+            identidad_genero_otro=identidad_genero_otro,
             direccion=direccion,
             telefono=telefono,
             email=email,

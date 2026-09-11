@@ -24,8 +24,37 @@
         <label>Fecha de Nacimiento:</label>
         <input type="date" name="fecha_nacimiento" value="{{ paciente.fecha_nacimiento|date:'Y-m-d' }}"><br>
 
-        <label>Sexo:</label>
-        <input type="text" name="sexo" value="{{ paciente.sexo }}"><br>
+        <label for="sexo_asignado_al_nacer">Sexo asignado al nacer: </label>
+        <select name="sexo_asignado_al_nacer" id="sexo_asignado_al_nacer" required>
+            <option value="">Seleccione una opción:</option>
+            <option value="M">Masculino</option>
+            <option value="F">Femenino</option>
+            <option value="I">Intersexual</option>
+            <option value="N">No informado</option>
+        </select>
+
+        <label for="identidad_genero">Identidad de género: </label>
+        <select name="identidad_genero" id="identidad_genero" required>
+            <option value="">Seleccione una opción:</option>
+            <option value="M">Masculino</option>
+            <option value="F">Femenino</option>
+            <option value="X">No binario</option>
+            <option value="O">Otro</option>
+            <option value="N">Prefiere no informar</option>
+        </select>
+
+        <div id="contenedor_identidad_otro" style="display: none;">
+            <label for="identidad_genero_otro">
+                Especificar identidad de género:
+            </label>
+
+            <input
+                type="text"
+                name="identidad_genero_otro"
+                id="identidad_genero_otro"
+                maxlength="100"
+            >
+        </div>
 
         <label>Direccion:</label>
         <input type="text" name="direccion" value="{{ paciente.direccion }}"><br>
@@ -54,5 +83,25 @@
     </form>
 
     <a href="/pacientes/">Volver a Pacientes</a>
+
+    <script>
+        const identidadGenero = document.getElementById('identidad_genero');
+        const contenedorOtro = document.getElementById('contenedor_identidad_otro');
+        const identidadOtro = document.getElementById('identidad_genero_otro');
+
+        identidadGenero.addEventListener('change', function() {
+            if (this.value === 'O') {
+                contenedorOtro.style.display = 'block';
+                identidadOtro.required = true;
+            } else {
+                contenedorOtro.style.display = 'none';
+                identidadOtro.required = false;
+                identidadOtro.value = ''; // Limpia el campo.
+            }
+        });
+    </script>
+
+
+
 </body>
 </html>
