@@ -27,7 +27,7 @@
             <th>Telefono Emergencia</th>
             <th>Obra Social</th>
             <th>Numero Afiliado</th>
-            <th>Fecha Alta</th>
+            <th>Fecha de Admisión</th>
             <th>Estado</th>
         </tr>
     {% for paciente in pacientes %}
@@ -45,7 +45,7 @@
             <td>{{ paciente.telefono_emergencia }}</td>
             <td>{{ paciente.obra_social }}</td>
             <td>{{ paciente.numero_afiliado }}</td>
-            <td>{{ paciente.fecha_alta }}</td>
+            <td>{{ paciente.fecha_admision }}</td>
             <td>{{ paciente.estado }}</td>
         </tr>
     {% endfor %}

@@ -1,18 +1,17 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from .pacientes_db import obtener_pacientes
+
+
 from .models import Paciente
 from .models import Medico
 from .models import Especialidad
-
-
-def saludo(request):
-    return HttpResponse('Hola Mundo')
 
 def index(request):
     return render(request, 'app_hospital/index.html')
 
 def pacientes(request):
-    lista_pacientes = Paciente.objects.all()
+    lista_pacientes = obtener_pacientes()
     return render(request, 'app_hospital/pacientes.html', {'pacientes': lista_pacientes})
 
 def medicos(request):
