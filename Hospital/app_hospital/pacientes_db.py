@@ -7,7 +7,8 @@ def obtener_pacientes():
                 nombre,
                 apellido,
                 dni,
-                fecha_nacimiento, sexo,
+                fecha_nacimiento, 
+                sexo,
                 direccion,
                 telefono,
                 email,
@@ -21,3 +22,60 @@ def obtener_pacientes():
                 FROM pacientes ORDER BY apellido, nombre""")
         columnas = [col[0] for col in cursor.description]
     return [dict(zip(columnas, fila)) for fila in cursor.fetchall()]
+
+def agregar_paciente_db(
+    nombre,
+    apellido,
+    dni,
+    fecha_nacimiento,
+    sexo,
+    direccion,
+    telefono,
+    email,
+    grupo_sanguineo,
+    contacto_emergencia,
+    telefono_emergencia,
+    obra_social,
+    numero_afiliado
+):
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            INSERT INTO pacientes (
+                nombre,
+                apellido,
+                dni,
+                fecha_nacimiento,
+                sexo,
+                direccion,
+                telefono,
+                email,
+                grupo_sanguineo,
+                contacto_emergencia,
+                telefono_emergencia,
+                obra_social,
+                numero_afiliado,
+                `fecha_admisión`,
+                estado
+            )
+            VALUES (
+                %s, %s, %s, %s, %s,
+                %s, %s, %s, %s, %s,
+                %s, %s, %s,
+                CURDATE(),
+                'Activo'
+            )
+        """, [
+            nombre,
+            apellido,
+            dni,
+            fecha_nacimiento,
+            sexo,
+            direccion or None,
+            telefono,
+            email,
+            grupo_sanguineo,
+            contacto_emergencia or None,
+            telefono_emergencia or None,
+            obra_social or None,
+            numero_afiliado or None,
+        ])
