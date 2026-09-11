@@ -69,7 +69,7 @@ def agregar_paciente_db(
                 estado
             )
             VALUES (
-                %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
+                %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
                 CURDATE(), 'Activo'
             )""", [
             nombre,
