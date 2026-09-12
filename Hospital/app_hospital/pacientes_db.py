@@ -8,7 +8,9 @@ def obtener_pacientes():
                 apellido,
                 dni,
                 fecha_nacimiento, 
-                sexo,
+                sexo_asignado_al_nacer,
+                identidad_genero,
+                identidad_genero_otro,
                 direccion,
                 telefono,
                 email,
@@ -21,7 +23,8 @@ def obtener_pacientes():
                 estado
                 FROM pacientes ORDER BY apellido, nombre""")
         columnas = [col[0] for col in cursor.description]
-    return [dict(zip(columnas, fila)) for fila in cursor.fetchall()]
+        filas = cursor.fetchall()
+    return [dict(zip(columnas, fila)) for fila in filas]
 
 def agregar_paciente_db(
     nombre,
