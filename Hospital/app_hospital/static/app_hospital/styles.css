@@ -1,106 +1,572 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* =========================================================
+   VARIABLES GENERALES
+   ========================================================= */
+
+:root {
+    --hospital-primary: #176b94;
+    --hospital-primary-dark: #105675;
+    --hospital-primary-light: #2586b4;
+
+    --hospital-bg: #f4f8fb;
+    --hospital-white: #ffffff;
+
+    --hospital-text: #243746;
+    --hospital-muted: #6c7f8c;
+
+    --hospital-border: #d7e5ed;
+    --hospital-hover: #edf7fc;
+
+    --hospital-success-bg: #dff3e8;
+    --hospital-success-text: #23734f;
+
+    --hospital-danger-bg: #f8dddd;
+    --hospital-danger-text: #9a3434;
 }
+
+
+/* =========================================================
+   GENERAL
+   ========================================================= */
+
+html,
+body {
+    min-height: 100%;
+}
+
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #f4f8fb;
-    color: #333333;
-    line-height: 1.5;
-    padding: 20px;
+    margin: 0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background-color: var(--hospital-bg);
+
+    color: var(--hospital-text);
 }
 
-h1 {
-    color: #2c6e91;
-    margin-bottom: 20px;
-    text-align: center;
-}
 
-/* Botones y links con forma de boton */
 a {
     text-decoration: none;
 }
 
-button {
-    background-color: #2c6e91;
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    color: var(--hospital-primary-dark);
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.hospital-navbar {
+    background-color: var(--hospital-primary);
+
+    box-shadow:
+        0 2px 10px
+        rgba(0, 0, 0, 0.10);
+}
+
+
+.hospital-navbar .navbar-brand {
+    font-weight: 700;
+
+    letter-spacing: 0.3px;
+}
+
+
+.hospital-navbar .nav-link {
+    color:
+        rgba(255, 255, 255, 0.88);
+}
+
+
+.hospital-navbar .nav-link:hover {
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   PORTADA / HERO
+   ========================================================= */
+
+.hospital-cover {
+
+    min-height: 520px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(7, 43, 64, 0.92) 0%,
+            rgba(17, 91, 126, 0.72) 45%,
+            rgba(17, 91, 126, 0.15) 100%
+        ),
+        url("img/recepcion_hospital.jpg");
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+
     color: white;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 5px;
-    font-size: 15px;
-    cursor: pointer;
 }
 
-button:hover {
-    background-color: #1f5470;
+
+.hospital-cover-content {
+    max-width: 680px;
 }
 
-/* Formularios */
-form {
+
+.hospital-cover h1 {
+    color: white;
+
+    font-size: clamp(
+        2.2rem,
+        5vw,
+        4rem
+    );
+}
+
+
+.hospital-cover p {
+    color:
+        rgba(255, 255, 255, 0.92);
+}
+
+
+.hospital-badge {
+
+    background-color:
+        rgba(255, 255, 255, 0.18);
+
+    color: white;
+
+    padding:
+        8px
+        14px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.35);
+
+    backdrop-filter: blur(4px);
+}
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.hospital-card {
+
+    border:
+        1px solid
+        var(--hospital-border);
+
+    border-radius: 16px;
+
+    background-color:
+        var(--hospital-white);
+
+    box-shadow:
+        0 5px 18px
+        rgba(0, 0, 0, 0.06);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.hospital-card:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 9px 26px
+        rgba(0, 0, 0, 0.09);
+}
+
+
+.hospital-card .card-title {
+    color:
+        var(--hospital-primary-dark);
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   BOTONES
+   ========================================================= */
+
+.btn-hospital {
+
+    background-color:
+        var(--hospital-primary);
+
+    border-color:
+        var(--hospital-primary);
+
+    color: white;
+
+    font-weight: 500;
+}
+
+
+.btn-hospital:hover,
+.btn-hospital:focus {
+
+    background-color:
+        var(--hospital-primary-dark);
+
+    border-color:
+        var(--hospital-primary-dark);
+
+    color: white;
+}
+
+
+.btn-outline-hospital {
+
+    border-color:
+        var(--hospital-primary);
+
+    color:
+        var(--hospital-primary);
+}
+
+
+.btn-outline-hospital:hover {
+
+    background-color:
+        var(--hospital-primary);
+
+    border-color:
+        var(--hospital-primary);
+
+    color: white;
+}
+
+
+/* =========================================================
+   TÍTULOS DE PÁGINAS
+   ========================================================= */
+
+.page-header {
+
     background-color: white;
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+
+    border:
+        1px solid
+        var(--hospital-border);
+
+    border-radius: 14px;
+
+    padding: 24px;
+
+    box-shadow:
+        0 4px 14px
+        rgba(0, 0, 0, 0.04);
 }
 
-label {
-    display: block;
-    margin-top: 12px;
+
+.page-header h1,
+.page-header h2 {
     margin-bottom: 4px;
-    font-weight: bold;
 }
 
-input[type="text"],
-input[type="date"],
-select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
+
+.page-subtitle {
+    color:
+        var(--hospital-muted);
+
+    margin-bottom: 0;
 }
 
-form button {
-    margin-top: 20px;
+
+/* =========================================================
+   TABLAS
+   ========================================================= */
+
+.hospital-table {
+
+    background-color:
+        var(--hospital-white);
+
+    border:
+        1px solid
+        var(--hospital-border);
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 4px 15px
+        rgba(0, 0, 0, 0.05);
 }
 
-/* Tablas */
-table {
-    width: 100%;
-    max-width: 900px;
-    margin: 0 auto 20px auto;
-    border-collapse: collapse;
-    background-color: white;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+
+.hospital-table table {
+    margin-bottom: 0;
 }
 
-th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #e0e0e0;
-}
 
-th {
-    background-color: #2c6e91;
+.hospital-table thead th {
+
+    background-color:
+        var(--hospital-primary);
+
     color: white;
+
+    border: none;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    padding:
+        14px
+        15px;
 }
 
-tr:hover {
-    background-color: #f0f6fa;
+
+.hospital-table tbody td {
+
+    vertical-align: middle;
+
+    padding:
+        13px
+        15px;
+
+    border-color: #edf2f5;
 }
 
-/* Link para volver al inicio */
-body > a {
-    display: inline-block;
-    margin-top: 15px;
-    color: #2c6e91;
-    font-weight: bold;
+
+.hospital-table tbody tr {
+
+    transition:
+        background-color
+        0.15s ease;
 }
 
-body > a:hover {
-    text-decoration: underline;
+
+.hospital-table tbody tr:hover td {
+
+    background-color:
+        var(--hospital-hover);
+}
+
+
+/* =========================================================
+   ESTADOS
+   ========================================================= */
+
+.badge-activo {
+
+    background-color:
+        var(--hospital-success-bg);
+
+    color:
+        var(--hospital-success-text);
+
+    border:
+        1px solid
+        #bee4d0;
+}
+
+
+.badge-inactivo {
+
+    background-color:
+        var(--hospital-danger-bg);
+
+    color:
+        var(--hospital-danger-text);
+
+    border:
+        1px solid
+        #edc3c3;
+}
+
+
+/* =========================================================
+   FORMULARIOS
+   ========================================================= */
+
+.hospital-form {
+
+    max-width: 900px;
+
+    margin:
+        0 auto;
+
+    background-color: white;
+
+    border:
+        1px solid
+        var(--hospital-border);
+
+    border-radius: 16px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 5px 18px
+        rgba(0, 0, 0, 0.06);
+}
+
+
+.form-label {
+
+    font-weight: 600;
+
+    color:
+        #36576b;
+}
+
+
+.form-control,
+.form-select {
+
+    border-color:
+        #cbdde7;
+
+    border-radius: 8px;
+
+    padding:
+        10px
+        12px;
+}
+
+
+.form-control:hover,
+.form-select:hover {
+
+    border-color:
+        #9dbecd;
+}
+
+
+.form-control:focus,
+.form-select:focus {
+
+    border-color:
+        var(--hospital-primary);
+
+    box-shadow:
+        0 0 0 0.25rem
+        rgba(23, 107, 148, 0.14);
+}
+
+
+/* =========================================================
+   SECCIONES DE FORMULARIOS
+   ========================================================= */
+
+.form-section {
+
+    padding-bottom: 22px;
+
+    margin-bottom: 25px;
+
+    border-bottom:
+        1px solid
+        #e7eff4;
+}
+
+
+.form-section:last-child {
+    border-bottom: none;
+
+    margin-bottom: 0;
+}
+
+
+.form-section-title {
+
+    color:
+        var(--hospital-primary-dark);
+
+    font-size: 1.15rem;
+
+    font-weight: 700;
+
+    margin-bottom: 18px;
+}
+
+
+/* =========================================================
+   MENSAJES DJANGO
+   ========================================================= */
+
+.messages-container {
+
+    max-width: 900px;
+
+    margin:
+        20px auto;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.hospital-footer {
+
+    background-color:
+        #e8f1f6;
+
+    color:
+        #647986;
+
+    border-top:
+        1px solid
+        var(--hospital-border);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media
+(max-width: 768px) {
+
+    .hospital-cover {
+
+        min-height: 430px;
+
+        background-position:
+            60% center;
+    }
+
+
+    .hospital-cover-content {
+
+        max-width: 100%;
+    }
+
+
+    .hospital-form {
+
+        padding: 20px;
+    }
+
+
+    .page-header {
+
+        padding: 18px;
+    }
 }

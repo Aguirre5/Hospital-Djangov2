@@ -1,16 +1,204 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'app_hospital/styles.css' %}">
-    <title>Hospital</title>
-</head>
-<body>
-    <h1>Bienvenido al Sistema del Hospital</h1>
-    <p>Esta es la pagina principal.</p>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <a href="/pacientes/"><button>Ver Pacientes</button></a>
-    <a href="/medicos/"><button>Ver Medicos</button></a>
+    <title>Sistema de Gestión Hospitalaria</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{% static 'app_hospital/styles.css' %}"
+    >
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark hospital-navbar">
+        <div class="container">
+
+            <a class="navbar-brand" href="{% url 'index' %}">
+                Sistema Hospitalario
+            </a>
+
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarHospital"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div
+                class="collapse navbar-collapse"
+                id="navbarHospital"
+            >
+                <div class="navbar-nav ms-auto">
+
+                    <a
+                        class="nav-link"
+                        href="{% url 'pacientes' %}"
+                    >
+                        Pacientes
+                    </a>
+
+                    <a
+                        class="nav-link"
+                        href="{% url 'medicos' %}"
+                    >
+                        Médicos
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+    </nav>
+
+
+    <section class="hospital-cover d-flex align-items-center">
+
+        <div class="container">
+
+            <div class="hospital-cover-content py-5">
+
+                <span
+                    class="badge rounded-pill hospital-badge mb-3"
+                >
+                    Sistema Hospitalario
+                </span>
+
+                <h1 class="fw-bold mb-3">
+                    Gestión Hospitalaria
+                </h1>
+
+                <p class="lead mb-4">
+                    Administración integral de pacientes,
+                    médicos y atención hospitalaria.
+                </p>
+
+                <div class="d-flex flex-wrap gap-2">
+
+                    <a
+                        href="{% url 'pacientes' %}"
+                        class="btn btn-light btn-lg"
+                    >
+                        Ver pacientes
+                    </a>
+
+                    <a
+                        href="{% url 'medicos' %}"
+                        class="btn btn-outline-light btn-lg"
+                    >
+                        Ver médicos
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <main class="container py-5">
+
+        <div class="mb-4">
+            <h2 class="fw-bold mb-1">
+                Panel principal
+            </h2>
+
+            <p class="text-secondary mb-0">
+                Seleccione una sección para comenzar.
+            </p>
+        </div>
+
+
+        <div class="row g-4">
+
+            <div class="col-12 col-md-6">
+
+                <div class="card hospital-card h-100">
+
+                    <div class="card-body p-4">
+
+                        <h3 class="card-title h4">
+                            Pacientes
+                        </h3>
+
+                        <p class="card-text text-secondary">
+                            Consulte y administre la información
+                            de los pacientes registrados.
+                        </p>
+
+                        <a
+                            href="{% url 'pacientes' %}"
+                            class="btn btn-hospital"
+                        >
+                            Gestionar pacientes
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-12 col-md-6">
+
+                <div class="card hospital-card h-100">
+
+                    <div class="card-body p-4">
+
+                        <h3 class="card-title h4">
+                            Médicos
+                        </h3>
+
+                        <p class="card-text text-secondary">
+                            Consulte profesionales,
+                            especialidades, consultorios
+                            y horarios.
+                        </p>
+
+                        <a
+                            href="{% url 'medicos' %}"
+                            class="btn btn-hospital"
+                        >
+                            Gestionar médicos
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <footer class="hospital-footer py-4 mt-4">
+        <div class="container text-center">
+            Sistema de Gestión Hospitalaria
+        </div>
+    </footer>
+
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
+
 </body>
 </html>

@@ -1,77 +1,241 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    {% load static %}
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="{% static 'app_hospital/styles.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Pacientes</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{% static 'app_hospital/styles.css' %}"
+    >
 </head>
+
 <body>
-    <h1>Lista de Pacientes</h1>
 
-    <a href="/pacientes/agregar/"><button>Agregar Paciente</button></a>
-    <input type="text" id="buscador" placeholder="Buscar paciente:" onkeyup="buscarPaciente()">
+    <nav class="navbar navbar-dark hospital-navbar">
+        <div class="container-fluid px-3 px-lg-5">
 
-    <table border="1" id="tablaPacientes">
-        <tr>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>DNI</th>
-            <th>Fecha Nacimiento</th>
-            <th>Sexo</th>
-            <th>Direccion</th>
-            <th>Telefono</th>
-            <th>Email</th>
-            <th>Grupo Sanguineo</th>
-            <th>Contacto Emergencia</th>
-            <th>Telefono Emergencia</th>
-            <th>Obra Social</th>
-            <th>Numero Afiliado</th>
-            <th>Fecha de Admisión</th>
-            <th>Estado</th>
-        </tr>
-    {% for paciente in pacientes %}
-        <tr>
-            <td>{{ paciente.nombre }}</td>
-            <td>{{ paciente.apellido }}</td>
-            <td>{{ paciente.dni }}</td>
-            <td>{{ paciente.fecha_nacimiento }}</td>
-            <td>{{ paciente.sexo }}</td>
-            <td>{{ paciente.direccion }}</td>
-            <td>{{ paciente.telefono }}</td>
-            <td>{{ paciente.email }}</td>
-            <td>{{ paciente.grupo_sanguineo }}</td>
-            <td>{{ paciente.contacto_emergencia }}</td>
-            <td>{{ paciente.telefono_emergencia }}</td>
-            <td>{{ paciente.obra_social }}</td>
-            <td>{{ paciente.numero_afiliado }}</td>
-            <td>{{ paciente.fecha_admision }}</td>
-            <td>{{ paciente.estado }}</td>
-        </tr>
-    {% endfor %}
-    </table>
+            <a
+                class="navbar-brand"
+                href="{% url 'index' %}"
+            >
+                Sistema Hospitalario
+            </a>
 
-    <a href="/">Volver al inicio</a>
+        </div>
+    </nav>
 
-    <script>
-        // Filtra las filas de la tabla segun lo que se escribe en el buscador
-        function buscarPaciente() {
-            var texto = document.getElementById("buscador").value.toLowerCase();
-            var tabla = document.getElementById("tablaPacientes");
-            var filas = tabla.getElementsByTagName("tr");
 
-            // Empieza en 1 para saltar la fila de encabezados
-            for (var i = 1; i < filas.length; i++) {
-                var fila = filas[i];
-                var textoFila = fila.textContent.toLowerCase();
+    <main class="container-fluid px-3 px-lg-5 py-4">
 
-                if (textoFila.indexOf(texto) > -1) {
-                    fila.style.display = "";
-                } else {
-                    fila.style.display = "none";
-                }
-            }
-        }
+        <div
+            class="
+                page-header
+                d-flex
+                flex-column
+                flex-md-row
+                justify-content-between
+                align-items-md-center
+                gap-3
+                mb-4
+            "
+        >
+
+            <div>
+                <h2 class="fw-bold">
+                    Pacientes
+                </h2>
+
+                <p class="page-subtitle">
+                    Pacientes registrados
+                    en el sistema hospitalario.
+                </p>
+            </div>
+
+
+            <div class="d-flex flex-wrap gap-2">
+
+                <a
+                    href="{% url 'index' %}"
+                    class="btn btn-outline-secondary"
+                >
+                    Volver
+                </a>
+
+                <a
+                    href="{% url 'agregar_paciente' %}"
+                    class="btn btn-hospital"
+                >
+                    + Agregar paciente
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="hospital-table table-responsive">
+
+            <table
+                class="table table-hover align-middle mb-0"
+            >
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Paciente</th>
+                        <th>DNI</th>
+                        <th>Nacimiento</th>
+                        <th>Sexo asignado</th>
+                        <th>Identidad</th>
+                        <th>Teléfono</th>
+                        <th>Grupo sanguíneo</th>
+                        <th>Obra social</th>
+                        <th>Admisión</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for paciente in pacientes %}
+
+                    <tr>
+
+                        <td>
+                            {{ paciente.id_paciente }}
+                        </td>
+
+                        <td class="fw-semibold">
+                            {{ paciente.nombre }}
+                            {{ paciente.apellido }}
+                        </td>
+
+                        <td>
+                            {{ paciente.dni }}
+                        </td>
+
+                        <td>
+                            {{ paciente.fecha_nacimiento|date:"d/m/Y" }}
+                        </td>
+
+                        <td>
+
+                            {% if paciente.sexo_asignado_al_nacer == "M" %}
+                                Masculino
+                            {% elif paciente.sexo_asignado_al_nacer == "F" %}
+                                Femenino
+                            {% elif paciente.sexo_asignado_al_nacer == "I" %}
+                                Intersexual
+                            {% elif paciente.sexo_asignado_al_nacer == "N" %}
+                                No informado
+                            {% else %}
+                                —
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            {% if paciente.identidad_genero == "M" %}
+                                Masculino
+                            {% elif paciente.identidad_genero == "F" %}
+                                Femenino
+                            {% elif paciente.identidad_genero == "X" %}
+                                No binario
+                            {% elif paciente.identidad_genero == "O" %}
+                                {{ paciente.identidad_genero_otro|default:"Otro" }}
+                            {% elif paciente.identidad_genero == "N" %}
+                                No informado
+                            {% else %}
+                                —
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+                            {{ paciente.telefono|default:"—" }}
+                        </td>
+
+                        <td>
+                            {{ paciente.grupo_sanguineo|default:"—" }}
+                        </td>
+
+                        <td>
+                            {{ paciente.obra_social|default:"—" }}
+                        </td>
+
+                        <td>
+                            {{ paciente.fecha_admision|date:"d/m/Y" }}
+                        </td>
+
+                        <td>
+
+                            {% if paciente.estado == "Activo" %}
+
+                                <span
+                                    class="
+                                        badge
+                                        rounded-pill
+                                        badge-activo
+                                    "
+                                >
+                                    Activo
+                                </span>
+
+                            {% else %}
+
+                                <span
+                                    class="
+                                        badge
+                                        rounded-pill
+                                        badge-inactivo
+                                    "
+                                >
+                                    {{ paciente.estado }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td
+                            colspan="11"
+                            class="text-center text-secondary py-5"
+                        >
+                            No hay pacientes registrados.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
     </script>
+
 </body>
 </html>
