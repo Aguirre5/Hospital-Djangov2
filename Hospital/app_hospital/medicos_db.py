@@ -1,8 +1,8 @@
 from django.db import connection
 
-def obtener_medicos():
+def obtener_medicos(busqueda=''):
     with connection.cursor() as cursor:
-        cursor.execute("""SELECT
+        sql="""SELECT
                 m.id_medico,
                 m.nombre,
                 m.apellido,
@@ -18,7 +18,39 @@ def obtener_medicos():
                 FROM medicos m
                 INNER JOIN especialidades e ON 
                 m.id_especialidad = e.id_especialidad
-                ORDER BY m.apellido, m.nombre""")
+                """
+        
+        parametros = []
+
+        if busqueda:
+
+            termino = f"%{busqueda}%"
+
+            sql += """
+                WHERE
+                    CAST(m.id_medico AS CHAR) LIKE %s
+                    OR m.nombre LIKE %s
+                    OR m.apellido LIKE %s
+                    OR CONCAT(m.nombre, ' ', m.apellido) LIKE %s
+                    OR m.matricula LIKE %s
+                    OR e.nombre LIKE %s
+            """
+
+            parametros = [
+                termino,
+                termino,
+                termino,
+                termino,
+                termino,
+                termino,
+            ]
+
+        sql += """
+            ORDER BY m.apellido, m.nombre
+        """
+
+        cursor.execute(sql, parametros)
+
         columnas = [col[0] for col in cursor.description]
         filas = cursor.fetchall()
     return [dict(zip(columnas, fila)) for fila in filas]

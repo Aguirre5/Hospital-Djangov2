@@ -13,13 +13,17 @@ def index(request):
     return render(request, 'app_hospital/index.html')
 
 def pacientes(request):
-    lista_pacientes = obtener_pacientes()
-    return render(request, 'app_hospital/pacientes.html', {'pacientes': lista_pacientes})
+    busqueda = request.GET.get('q', '').strip()
+    lista_pacientes = obtener_pacientes(busqueda)
+    return render(request, 'app_hospital/pacientes.html', {'pacientes': lista_pacientes, 'busqueda': busqueda})
 
 def medicos(request):
-    lista_medicos = obtener_medicos()
+    busqueda = request.GET.get('q', '').strip()
+    lista_medicos = obtener_medicos(busqueda)
     return render(request, 'app_hospital/medicos.html', {
-        'medicos': lista_medicos,})
+        'medicos': lista_medicos,
+        'busqueda': busqueda,
+    })
 
 def tratamientos(request):
     return render(request, 'app_hospital/tratamientos.html')

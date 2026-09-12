@@ -1,8 +1,8 @@
 from django.db import connection
 
-def obtener_pacientes():
+def obtener_pacientes(busqueda=''):
     with connection.cursor() as cursor:
-        cursor.execute("""SELECT
+        sql="""SELECT
                 id_paciente,
                 nombre,
                 apellido,
@@ -21,7 +21,27 @@ def obtener_pacientes():
                 numero_afiliado,
                 fecha_admisión AS fecha_admision,
                 estado
-                FROM pacientes ORDER BY apellido, nombre""")
+                FROM pacientes"""
+        
+        parametros = []
+        
+        if busqueda: 
+            termino = f"%{busqueda}%"
+            sql += """ 
+            WHERE 
+            CAST(id_paciente AS CHAR) LIKE %s 
+            OR nombre LIKE %s
+            OR apellido LIKE %s 
+            OR dni LIKE %s
+            OR CONCAT(nombre, ' ', apellido) LIKE %s
+            """
+            
+            parametros = [termino, termino, termino, termino, termino]
+            
+        sql += " ORDER BY apellido, nombre"
+        
+        cursor.execute(sql, parametros)
+        
         columnas = [col[0] for col in cursor.description]
         filas = cursor.fetchall()
     return [dict(zip(columnas, fila)) for fila in filas]

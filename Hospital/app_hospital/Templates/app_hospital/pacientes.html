@@ -83,6 +83,38 @@
 
         </div>
 
+<form method="GET" class="row g-2 mb-4">
+
+    <div class="col-12 col-md-9">
+        <input
+            type="text"
+            name="q"
+            class="form-control"
+            placeholder="Buscar por ID, DNI, nombre o apellido..."
+            value="{{ busqueda }}"
+        >
+    </div>
+
+    <div class="col-6 col-md-2">
+        <button
+            type="submit"
+            class="btn btn-hospital w-100"
+        >
+            Buscar
+        </button>
+    </div>
+
+    <div class="col-6 col-md-1">
+        <a
+            href="{% url 'pacientes' %}"
+            class="btn btn-outline-secondary w-100"
+        >
+            Limpiar
+        </a>
+    </div>
+
+</form>
+
 
         <div class="hospital-table table-responsive">
 
