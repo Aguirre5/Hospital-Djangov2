@@ -1,37 +1,147 @@
 {% load static %}
-<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sistema de Gestión Hospitalaria</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="{% static 'app_hospital/styles.css' %}" rel="stylesheet"></head>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sistema de Gestión Hospitalaria</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'app_hospital/styles.css' %}" rel="stylesheet">
+</head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark hospital-navbar"><div class="container"><a class="navbar-brand" href="{% url 'index' %}">Sistema Hospitalario</a>
-<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHospital" aria-label="Mostrar navegación"><span class="navbar-toggler-icon"></span></button>
-<div class="collapse navbar-collapse" id="navbarHospital"><div class="navbar-nav ms-auto align-items-lg-center">
-{% if 'pacientes.ver' in permisos_hospital %}<a class="nav-link" href="{% url 'pacientes' %}">Pacientes</a>{% endif %}
-{% if 'medicos.ver' in permisos_hospital %}<a class="nav-link" href="{% url 'medicos' %}">Médicos</a>{% endif %}
-{% if 'tratamientos.ver' in permisos_hospital %}<a class="nav-link" href="{% url 'tratamientos' %}">Tratamientos</a>{% endif %}
-<span class="text-white ms-lg-3 me-lg-2">{{ usuario_hospital.nombre }}</span>
-<form method="post" action="{% url 'logout_hospital' %}" class="m-0">{% csrf_token %}<button class="btn btn-outline-light btn-sm" type="submit">Cerrar sesión</button></form>
-</div></div></div></nav>
-<section class="hospital-cover d-flex align-items-center"><div class="container"><div class="hospital-cover-content py-5"><span class="badge rounded-pill hospital-badge mb-3">Sistema Hospitalario</span>
-<h1 class="fw-bold mb-3">Gestión Hospitalaria</h1><p class="lead mb-4">Administración integral de pacientes, médicos y atención hospitalaria.</p>
-<div class="d-flex flex-wrap gap-2">{% if 'pacientes.ver' in permisos_hospital %}<a href="{% url 'pacientes' %}" class="btn btn-light btn-lg">Ver pacientes</a>{% endif %}
-{% if 'medicos.ver' in permisos_hospital %}<a href="{% url 'medicos' %}" class="btn btn-outline-light btn-lg">Ver médicos</a>{% endif %}
-{% if 'tratamientos.ver' in permisos_hospital %}<a href="{% url 'tratamientos' %}" class="btn btn-outline-light btn-lg">Ver tratamientos</a>{% endif %}</div></div></div></section>
-<main class="container py-5"><div class="mb-4"><h2 class="fw-bold mb-1">Panel principal</h2><p class="text-secondary mb-0">Elegí una sección habilitada para tu cuenta.</p></div><div class="row g-4">
-{% if 'pacientes.ver' in permisos_hospital %}<div class="col-12 col-md-6 col-lg-4"><div class="card hospital-card h-100"><div class="card-body p-4"><h3 class="card-title h4">Pacientes</h3><p class="text-secondary">Consulta y gestión de pacientes registrados.</p><a href="{% url 'pacientes' %}" class="btn btn-hospital">Ver pacientes</a></div></div></div>{% endif %}
-{% if 'medicos.ver' in permisos_hospital %}<div class="col-12 col-md-6 col-lg-4"><div class="card hospital-card h-100"><div class="card-body p-4"><h3 class="card-title h4">Médicos</h3><p class="text-secondary">Profesionales, especialidades y consultorios.</p><a href="{% url 'medicos' %}" class="btn btn-hospital">Ver médicos</a></div></div></div>{% endif %}
-{% if 'tratamientos.ver' in permisos_hospital %}<div class="col-12 col-md-6 col-lg-4"><div class="card hospital-card h-100"><div class="card-body p-4"><h3 class="card-title h4">Tratamientos</h3><p class="text-secondary">Seguimiento de los tratamientos autorizados.</p><a href="{% url 'tratamientos' %}" class="btn btn-hospital">Ver tratamientos</a></div></div></div>{% endif %}
-</div></main>
+    <!-- Navegación: muestra las secciones permitidas y permite cerrar sesión. -->
+    <nav class="navbar navbar-expand-lg navbar-dark hospital-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'index' %}">Sistema Hospitalario</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarHospital" aria-label="Mostrar navegación">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarHospital">
+                <div class="navbar-nav ms-auto align-items-lg-center">
+                    {% if 'pacientes.ver' in permisos_hospital %}
+                        <a class="nav-link" href="{% url 'pacientes' %}">Pacientes</a>
+                    {% endif %}
+                    {% if 'medicos.ver' in permisos_hospital %}
+                        <a class="nav-link" href="{% url 'medicos' %}">Médicos</a>
+                    {% endif %}
+                    {% if 'tratamientos.ver' in permisos_hospital %}
+                        <a class="nav-link" href="{% url 'tratamientos' %}">Tratamientos</a>
+                    {% endif %}
+                    <span class="text-white ms-lg-3 me-lg-2">{{ usuario_hospital.nombre }}</span>
+                    <form method="post" action="{% url 'logout_hospital' %}" class="m-0">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-light btn-sm" type="submit">Cerrar sesión</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
 
 
-<section class="container py-5">
+<span class="navbar-text text-white me-3">
+
+    {{ usuario_hospital.nombre }}
+
+    {% if 'ADMIN' in usuario_hospital.roles %}
+        <span class="badge bg-light text-primary">
+            Administrador
+        </span>
+
+    {% elif 'MEDICO' in usuario_hospital.roles %}
+        <span class="badge bg-light text-primary">
+            Médico
+        </span>
+
+    {% elif 'RECEPCION' in usuario_hospital.roles %}
+        <span class="badge bg-light text-primary">
+            Recepción
+        </span>
+
+    {% elif 'VISOR' in usuario_hospital.roles %}
+        <span class="badge bg-light text-primary">
+            Visor
+        </span>
+    {% endif %}
+
+</span>
+
+
+    <!-- Portada: presenta el sistema y ofrece accesos rápidos según los permisos. -->
+    <section class="hospital-cover d-flex align-items-center">
+        <div class="container">
+            <div class="hospital-cover-content py-5">
+                <span class="badge rounded-pill hospital-badge mb-3">Sistema Hospitalario</span>
+                <h1 class="fw-bold mb-3">Gestión Hospitalaria</h1>
+                <p class="lead mb-4">Administración integral de pacientes, médicos y atención hospitalaria.</p>
+                <div class="d-flex flex-wrap gap-2">
+                    {% if 'pacientes.ver' in permisos_hospital %}
+                        <a href="{% url 'pacientes' %}" class="btn btn-light btn-lg">Ver pacientes</a>
+                    {% endif %}
+                    {% if 'medicos.ver' in permisos_hospital %}
+                        <a href="{% url 'medicos' %}" class="btn btn-outline-light btn-lg">Ver médicos</a>
+                    {% endif %}
+                    {% if 'tratamientos.ver' in permisos_hospital %}
+                        <a href="{% url 'tratamientos' %}" class="btn btn-outline-light btn-lg">Ver tratamientos</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Panel principal: tarjetas con descripción y acceso a cada área habilitada. -->
+    <main class="container py-5 mb-5">
+        <div class="mb-4">
+            <h2 class="fw-bold mb-1">Panel principal</h2>
+            <p class="text-secondary mb-0">
+                Accedé rápidamente a las áreas habilitadas para tu cuenta y a sus herramientas principales.
+            </p>
+        </div>
+        <div class="row g-4">
+            {% if 'pacientes.ver' in permisos_hospital %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card hospital-card h-100">
+                        <div class="card-body p-4">
+                            <h3 class="card-title h4">Pacientes</h3>
+                            <p class="text-secondary">Consulta y gestión de pacientes registrados.</p>
+                            <a href="{% url 'pacientes' %}" class="btn btn-hospital">Ver pacientes</a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if 'medicos.ver' in permisos_hospital %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card hospital-card h-100">
+                        <div class="card-body p-4">
+                            <h3 class="card-title h4">Médicos</h3>
+                            <p class="text-secondary">Profesionales, especialidades y consultorios.</p>
+                            <a href="{% url 'medicos' %}" class="btn btn-hospital">Ver médicos</a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if 'tratamientos.ver' in permisos_hospital %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card hospital-card h-100">
+                        <div class="card-body p-4">
+                            <h3 class="card-title h4">Tratamientos</h3>
+                            <p class="text-secondary">Seguimiento de los tratamientos autorizados.</p>
+                            <a href="{% url 'tratamientos' %}" class="btn btn-hospital">Ver tratamientos</a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </main>
+
+
+<section class="container py-5 mt-4 border-top">
 
     <div class="mb-4">
         <h2 class="fw-bold">Acerca del sistema</h2>
         <p class="text-secondary">
-            Una plataforma diseñada para mejorar la
-            organización y administración hospitalaria.
+            Conocé cómo esta plataforma ayuda a organizar
+            la información y las tareas del hospital.
         </p>
     </div>
 
@@ -42,7 +152,7 @@
 
             <p class="text-secondary mb-0">
                 El Sistema de Gestión Hospitalaria permite
-                centralizar la información de pacientes,
+                centralizar en un solo lugar la información de pacientes,
                 médicos y tratamientos en una misma
                 plataforma. Su objetivo es facilitar
                 las tareas administrativas y el acceso
