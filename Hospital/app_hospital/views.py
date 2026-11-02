@@ -1,22 +1,26 @@
-from django.http import HttpResponse, request
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from datetime import date, datetime
 import re
 from .pacientes_db import obtener_pacientes, agregar_paciente_db, dni_existe
 from .medicos_db import obtener_medicos, obtener_especialidades, agregar_medico_db
+from .auth_hospital import requiere_permiso
 
 def saludo(request):
     return HttpResponse("Hola, bienvenido a la aplicación del hospital.")
 
+@requiere_permiso("panel.ver")
 def index(request):
     return render(request, 'app_hospital/index.html')
 
+@requiere_permiso("pacientes.ver")
 def pacientes(request):
     busqueda = request.GET.get('q', '').strip()
     lista_pacientes = obtener_pacientes(busqueda)
     return render(request, 'app_hospital/pacientes.html', {'pacientes': lista_pacientes, 'busqueda': busqueda})
 
+@requiere_permiso("medicos.ver")
 def medicos(request):
     busqueda = request.GET.get('q', '').strip()
     lista_medicos = obtener_medicos(busqueda)
@@ -25,9 +29,7 @@ def medicos(request):
         'busqueda': busqueda,
     })
 
-def tratamientos(request):
-    return render(request, 'app_hospital/tratamientos.html')
-
+@requiere_permiso("pacientes.crear")
 def agregar_paciente(request):
     if request.method == 'POST':
         nombre = request.POST.get('nombre', '').strip()
@@ -207,16 +209,17 @@ def agregar_paciente(request):
 
     return render(request, 'app_hospital/agregar_paciente.html')
 
+@requiere_permiso("medicos.crear")
 def agregar_medico(request):
     if request.method == 'POST': 
-        nombre=request.POST.get('nombre', "").strip(),
-        apellido=request.POST.get('apellido', "").strip(),
-        matricula=request.POST.get('matricula', "").strip(),
-        telefono=request.POST.get('telefono', "").strip(),
+        nombre=request.POST.get('nombre', "").strip()
+        apellido=request.POST.get('apellido', "").strip()
+        matricula=request.POST.get('matricula', "").strip()
+        telefono=request.POST.get('telefono', "").strip()
         
-        email=request.POST.get('email', "").strip(),
-        consultorio=request.POST.get('consultorio', "").strip(),
-        horario_atencion=request.POST.get('horario_atencion', "").strip(),
+        email=request.POST.get('email', "").strip()
+        consultorio=request.POST.get('consultorio', "").strip()
+        horario_atencion=request.POST.get('horario_atencion', "").strip()
         id_especialidad=request.POST.get('id_especialidad', "").strip()
         
         agregar_medico_db(
