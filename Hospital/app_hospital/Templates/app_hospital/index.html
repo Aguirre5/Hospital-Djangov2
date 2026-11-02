@@ -22,5 +22,93 @@
 {% if 'pacientes.ver' in permisos_hospital %}<div class="col-12 col-md-6 col-lg-4"><div class="card hospital-card h-100"><div class="card-body p-4"><h3 class="card-title h4">Pacientes</h3><p class="text-secondary">Consulta y gestión de pacientes registrados.</p><a href="{% url 'pacientes' %}" class="btn btn-hospital">Ver pacientes</a></div></div></div>{% endif %}
 {% if 'medicos.ver' in permisos_hospital %}<div class="col-12 col-md-6 col-lg-4"><div class="card hospital-card h-100"><div class="card-body p-4"><h3 class="card-title h4">Médicos</h3><p class="text-secondary">Profesionales, especialidades y consultorios.</p><a href="{% url 'medicos' %}" class="btn btn-hospital">Ver médicos</a></div></div></div>{% endif %}
 {% if 'tratamientos.ver' in permisos_hospital %}<div class="col-12 col-md-6 col-lg-4"><div class="card hospital-card h-100"><div class="card-body p-4"><h3 class="card-title h4">Tratamientos</h3><p class="text-secondary">Seguimiento de los tratamientos autorizados.</p><a href="{% url 'tratamientos' %}" class="btn btn-hospital">Ver tratamientos</a></div></div></div>{% endif %}
-</div></main><footer class="hospital-footer py-4 mt-4"><div class="container text-center">Sistema de Gestión Hospitalaria</div></footer>
+</div></main>
+
+
+<section class="container py-5">
+
+    <div class="mb-4">
+        <h2 class="fw-bold">Acerca del sistema</h2>
+        <p class="text-secondary">
+            Una plataforma diseñada para mejorar la
+            organización y administración hospitalaria.
+        </p>
+    </div>
+
+    <div class="card hospital-card mb-4">
+        <div class="card-body p-4">
+
+            <h3 class="h4">¿Qué es este sistema?</h3>
+
+            <p class="text-secondary mb-0">
+                El Sistema de Gestión Hospitalaria permite
+                centralizar la información de pacientes,
+                médicos y tratamientos en una misma
+                plataforma. Su objetivo es facilitar
+                las tareas administrativas y el acceso
+                organizado a la información.
+            </p>
+
+        </div>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-6">
+            <div class="card hospital-card h-100">
+                <div class="card-body p-4">
+                    <h3 class="h5">Gestión de pacientes</h3>
+                    <p class="text-secondary">
+                        Registro, consulta y administración
+                        de información de pacientes.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card hospital-card h-100">
+                <div class="card-body p-4">
+                    <h3 class="h5">Gestión médica</h3>
+                    <p class="text-secondary">
+                        Administración de profesionales,
+                        especialidades y consultorios.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card hospital-card h-100">
+                <div class="card-body p-4">
+                    <h3 class="h5">Tratamientos</h3>
+                    <p class="text-secondary">
+                        Registro y seguimiento de tratamientos
+                        asociados a pacientes y médicos.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card hospital-card h-100">
+                <div class="card-body p-4">
+                    <h3 class="h5">Seguridad y permisos</h3>
+                    <p class="text-secondary">
+                        Acceso mediante cuentas individuales,
+                        con permisos diferenciados para
+                        cada función.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer class="hospital-footer py-4 mt-4"><div class="container text-center">Sistema de Gestión Hospitalaria</div></footer>
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script></body></html>
